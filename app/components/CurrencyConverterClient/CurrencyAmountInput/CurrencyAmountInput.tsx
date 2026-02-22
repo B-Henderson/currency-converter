@@ -5,8 +5,8 @@ import {Props} from './CurrencyAmountInput.interface'
 
 export function CurrencyAmountInput({ onValueChange, value }: Props) {    
     return (
-        <Field >
-            <FieldLabel htmlFor="input-field-amount">Amount:</FieldLabel>
+        <Field>
+            <FieldLabel htmlFor="input-field-amount">Amount</FieldLabel>
             <Input
                 id="input-field-amount"
                 type="number"
@@ -16,7 +16,7 @@ export function CurrencyAmountInput({ onValueChange, value }: Props) {
                 onChange={(e) => onValueChange(e.target.value)}
             />
             <FieldDescription>
-                Input an amount you wish to convert, along with a "from" currency and "to" currency
+                Input an amount you wish to convert
             </FieldDescription>
         </Field>
     )
