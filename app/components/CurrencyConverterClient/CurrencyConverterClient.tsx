@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
-import { CurrencySelect } from "@/app/components/CurrencySelect/CurrencySelect";
+import { CurrencySelect } from "@/app/components/CurrencyConverterClient/CurrencySelect/CurrencySelect";
+import { CurrencyAmountInput } from "@/app/components/CurrencyConverterClient/CurrencyAmountInput/CurrencyAmountInput";
 
 import { Props } from './CurrencyConverterClient.interface'
-import { CurrencyAmountInput } from "../CurrencyAmountInput/CurrencyAmountInput";
 
 
 export function CurrencyConverterClient({currencies }: Props) {
@@ -13,6 +14,7 @@ export function CurrencyConverterClient({currencies }: Props) {
     const [convertFrom, setConvertFrom] = useState<string>("")
     const [convertTo, setConvertTo] = useState<string>("")
     const [result, setResult] = useState<string | null>(null)
+    const debounceAmount = useDebounce(amount, 400);
     
 
     const onAmountChange = (val: string) => setAmount(val)
@@ -22,22 +24,22 @@ export function CurrencyConverterClient({currencies }: Props) {
 
     useEffect(() => {
         setResult(null);
-        if (amount && convertFrom && convertTo) {
+        if (debounceAmount && convertFrom && convertTo) {
             const fetchData = async () => {
-                const res = await fetch(`/api/convert-currencies?from=${convertFrom}&to=${convertTo}&amount=${amount}`);
+                const res = await fetch(`/api/convert-currencies?from=${convertFrom}&to=${convertTo}&amount=${debounceAmount}`);
                 const data = await res.json();
                 return data;
             };
             fetchData().then((data) => setResult(data?.value != null ? String(data.value) : JSON.stringify(data)));
         }
-    }, [amount, convertFrom, convertTo]);
+    }, [amount, convertFrom, convertTo, debounceAmount]);
 
     return (
-        <div>         
+        <div className="w-full">         
             <CurrencyAmountInput onValueChange={onAmountChange} value={amount} />
             <CurrencySelect currencies={currencies} placeholder="Convert From" onValueChange={onFromChange} value={convertFrom} />
             <CurrencySelect currencies={currencies} placeholder="Convert To" onValueChange={onToChange} value={convertTo} />            
-            {amount} - {convertFrom} - {convertTo} - {result}
+            {amount} - {convertFrom} - {convertTo} - {result != null ? parseFloat(result).toFixed(2) : "—"}
         </div>
     )
 }
