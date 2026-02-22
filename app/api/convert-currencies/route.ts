@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// route to convert currencies, prevent token leaking by using a server side route
 export async function GET(request: NextRequest) {
     /**
      * get the url params to construct the endpoint url
