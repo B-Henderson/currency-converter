@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 
-import { CurrencySelect } from "@/app/components/CurrencySelect/CurrencySelect";
+import { CurrencySelect } from "@/app/components/CurrencyConverterClient/CurrencySelect/CurrencySelect";
+import { CurrencyAmountInput } from "@/app/components/CurrencyConverterClient/CurrencyAmountInput/CurrencyAmountInput";
 
 import { Props } from './CurrencyConverterClient.interface'
-import { CurrencyAmountInput } from "../CurrencyAmountInput/CurrencyAmountInput";
 
 
 export function CurrencyConverterClient({currencies }: Props) {
