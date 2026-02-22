@@ -11,7 +11,7 @@ import { CurrencySelectInterface } from "./CurrencySelect.interface";
   
 export function CurrencySelect({ currencies, placeholder, onValueChange, value }:CurrencySelectInterface) {
   return (
-      <Combobox items={currencies} onInputValueChange={onValueChange} value={value}>
+      <Combobox items={currencies} onValueChange={(val) => onValueChange(val ?? "")} value={value}>
           <ComboboxInput placeholder={placeholder} />
           <ComboboxContent>
               <ComboboxEmpty>No Currency found.</ComboboxEmpty>
